@@ -1373,28 +1373,6 @@ const CommitPanel: React.FC = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Modal de Commit Trocado */}
-      <Dialog open={showCommitTrocadoDialog} onOpenChange={setShowCommitTrocadoDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <GitCommit className="h-5 w-5 text-primary" />
-              Commit Trocado
-            </DialogTitle>
-            <DialogDescription>
-              Modal em branco para commit trocado.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
-            {/* Conteúdo em branco */}
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowCommitTrocadoDialog(false)}>
-              Fechar
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
