@@ -552,8 +552,8 @@ const AppSidebar = () => {
             className="w-auto h-32 sm:h-36 md:h-40 rounded-xl object-contain p-2 mx-auto transition-all duration-200" 
           />
           
-          <div className="overflow-y-auto flex-1 pb-20" style={{
-          height: "calc(100vh - 120px)"
+          <div className="overflow-y-auto flex-1 pb-16" style={{
+          height: "calc(100vh - 160px)"
         }}>
             {sidebarCategories.map((category, index) => <SidebarGroup key={index}>
                 {category.items.length > 0 && <>
@@ -599,13 +599,13 @@ const AppSidebar = () => {
           </div>
         </SidebarGroup>
         
-        <SidebarGroup className="absolute bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border">
+        <SidebarGroup className="absolute bottom-0 left-0 right-0 z-10 bg-[#111827] border-t border-[#2b3341]">
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <SidebarMenuButton className={`flex items-center w-full p-2 h-10 ${firebaseClasses.menuItem.hover} rounded-md mx-auto my-1`}>
+                    <SidebarMenuButton className={`flex items-center w-full p-2 h-12 ${firebaseClasses.menuItem.hover} rounded-md mx-auto my-1`}>
                       <div className="flex items-center space-x-2 w-full min-w-0">
                         {userData?.imagem_perfil ? <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full overflow-hidden border-2 border-white flex-shrink-0">
                             <img src={userData.imagem_perfil} alt="Profile" className="w-full h-full object-cover" />
