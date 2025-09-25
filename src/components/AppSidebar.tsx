@@ -458,8 +458,8 @@ const AppSidebar = () => {
     }
   };
   const categoryBtnClasses = `
-    flex items-center justify-between px-2 sm:px-3 h-8 sm:h-9 md:h-10 cursor-pointer transition-all duration-200
-    rounded-md mx-1 my-0.5 font-medium text-sm sm:text-base
+    flex items-center justify-between px-3 h-10 cursor-pointer transition-all duration-200
+    rounded-md mx-1 my-0.5 font-medium
   `;
   const firebaseClasses = {
     sidebar: "bg-[#111827] border-none",
@@ -484,8 +484,8 @@ const AppSidebar = () => {
       tiny: "text-xs font-medium"
     }
   };
-  return <Sidebar className="border-r border-[#2b3341] h-screen w-full min-w-0 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-none">
-      <SidebarContent className="relative h-full flex flex-col">
+  return <Sidebar className="border-r border-[#2b3341] h-screen">
+      <SidebarContent className="relative h-full">
         <style>
           {`
             @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -539,83 +539,24 @@ const AppSidebar = () => {
             :root:not(.dark) .border-\\[\\#3e4a5e\\] {
               border-color: #dddddd !important;
             }
-
-            /* Responsive adjustments */
-            @media (max-width: 640px) {
-              .sidebar-logo {
-                height: 80px !important;
-              }
-              
-              .sidebar-content {
-                padding: 0.5rem !important;
-              }
-              
-              .sidebar-menu-item {
-                font-size: 0.8rem !important;
-                padding: 0.5rem !important;
-              }
-              
-              .sidebar-group-label {
-                font-size: 0.85rem !important;
-              }
-            }
-
-            @media (max-width: 480px) {
-              .sidebar-logo {
-                height: 60px !important;
-              }
-              
-              .sidebar-menu-item {
-                font-size: 0.75rem !important;
-                padding: 0.4rem !important;
-              }
-              
-              .sidebar-group-label {
-                font-size: 0.8rem !important;
-              }
-            }
-
-            @media (max-width: 360px) {
-              .sidebar-logo {
-                height: 50px !important;
-              }
-              
-              .sidebar-menu-item {
-                font-size: 0.7rem !important;
-                padding: 0.3rem !important;
-              }
-              
-              .sidebar-group-label {
-                font-size: 0.75rem !important;
-              }
-            }
           `}
         </style>
-        <SidebarGroup className="flex-1 relative min-h-0">
-          <img 
-            src="/Uploads/IconeFrico3D.png" 
-            alt="Fricó Alimentos Logo" 
-            onError={e => {
-              const target = e.target as HTMLImageElement;
-              target.src = "/Uploads/IconeFrico.png";
-            }} 
-            className="sidebar-logo w-auto h-32 sm:h-36 md:h-40 rounded-xl object-contain p-1 sm:p-2 mx-auto flex-shrink-0" 
-          />
+        <SidebarGroup className="flex-1 relative">
+          <img src="/Uploads/IconeFrico3D.png" alt="Fricó Alimentos Logo" onError={e => {
+          const target = e.target as HTMLImageElement;
+          target.src = "/Uploads/IconeFrico.png";
+        }} className="w-auto h-40 rounded-xl object-contain p-2 mx-auto" />
           
-          <div 
-            className="sidebar-content overflow-y-auto flex-1 pb-16 sm:pb-20 px-1 sm:px-2" 
-            style={{
-              height: "calc(100vh - 200px)",
-              maxHeight: "calc(100vh - 200px)"
-            }}
-          >
-            {sidebarCategories.map((category, index) => <SidebarGroup key={index} className="mb-2">
+          <div className="overflow-y-auto flex-1 pb-20" style={{
+          height: "calc(100vh - 120px)"
+        }}>
+            {sidebarCategories.map((category, index) => <SidebarGroup key={index}>
                 {category.items.length > 0 && <>
-                    <div className={`${categoryBtnClasses} ${expandedCategories[category.label] ? firebaseClasses.categoryBtn.active : firebaseClasses.categoryBtn.hover} ${firebaseClasses.text.normal} sidebar-group-label`} onClick={() => toggleCategoryExpansion(category.label)}>
-                      <div className="flex items-center gap-1 min-w-0">
-                        <category.icon className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
-                        <SidebarGroupLabel className="flex-1 text-sm sm:text-base md:text-lg font-bold truncate sidebar-group-label">{category.label}</SidebarGroupLabel>
-                        {category.badgeCount && category.badgeCount > 0 && <span className="ml-auto inline-flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 text-xs font-bold text-white bg-[#ff7a59] rounded-full flex-shrink-0">
+                    <div className={`${categoryBtnClasses} ${expandedCategories[category.label] ? firebaseClasses.categoryBtn.active : firebaseClasses.categoryBtn.hover} ${firebaseClasses.text.normal}`} onClick={() => toggleCategoryExpansion(category.label)}>
+                      <div className="flex items-center gap-1">
+                        <category.icon className="h-5 w-5" />
+                        <SidebarGroupLabel className="flex-1 text-1xl font-bold">{category.label}</SidebarGroupLabel>
+                        {category.badgeCount && category.badgeCount > 0 && <span className="ml-auto inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#ff7a59] rounded-full">
                             {category.badgeCount}
                           </span>}
                       </div>
@@ -623,23 +564,23 @@ const AppSidebar = () => {
                   rotate: expandedCategories[category.label] ? 180 : 0
                 }} transition={{
                   duration: 0.3
-                }} className="flex-shrink-0">
-                        <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4" />
+                }}>
+                        <ChevronDown className="h-4 w-4" />
                       </motion.div>
                     </div>
                     
                     <AnimatePresence>
                       {expandedCategories[category.label] && <motion.div initial="hidden" animate="visible" exit="hidden" variants={contentVariants} className="overflow-hidden">
-                          <SidebarGroupContent className="pl-4 sm:pl-6 md:pl-8 pr-1 mt-0.4">
+                          <SidebarGroupContent className="pl-8 pr-1 mt-0.4">
                             <SidebarMenu>
                               {category.items.map(item => <SidebarMenuItem key={item.to}>
-                                  <SidebarMenuButton isActive={location.pathname === item.to} onClick={() => navigate(item.to)} className={`sidebar-menu-item flex items-center h-8 sm:h-9 md:h-10 transition-all duration-200 rounded-md px-2 sm:px-3 ${location.pathname === item.to ? firebaseClasses.menuItem.active : firebaseClasses.menuItem.hover}`}>
-                                    <item.icon className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 flex-shrink-0" />
-                                    <span className="flex-1 text-xs sm:text-sm md:text-base font-bold truncate sidebar-menu-item">{item.label}</span>
-                                    {item.to === "/carrinho" && totalItens > 0 && <span className="ml-auto inline-flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 text-xs font-bold text-white bg-[#ff7a59] rounded-full flex-shrink-0">
+                                  <SidebarMenuButton isActive={location.pathname === item.to} onClick={() => navigate(item.to)} className={`flex items-center h-10 transition-all duration-200 rounded-md ${location.pathname === item.to ? firebaseClasses.menuItem.active : firebaseClasses.menuItem.hover}`}>
+                                    <item.icon className="mr-2 h-6 w-6" />
+                                    <span className="flex-1 text-1xl font-bold">{item.label}</span>
+                                    {item.to === "/carrinho" && totalItens > 0 && <span className="ml-auto inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#ff7a59] rounded-full">
                                         {totalItens}
                                       </span>}
-                                    {item.to === "/requisicoes" && pendingRequestsCount > 0 && <span className="ml-auto inline-flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 text-xs font-bold text-white bg-[#ff7a59] rounded-full flex-shrink-0">
+                                    {item.to === "/requisicoes" && pendingRequestsCount > 0 && <span className="ml-auto inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#ff7a59] rounded-full">
                                         {pendingRequestsCount}
                                       </span>}
                                   </SidebarMenuButton>
@@ -654,52 +595,52 @@ const AppSidebar = () => {
         </SidebarGroup>
         
         <SidebarGroup className="absolute bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border">
-          <SidebarGroupContent className="p-1 sm:p-2">
+          <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <SidebarMenuButton className={`flex items-center justify-center w-full p-1 sm:p-2 h-8 sm:h-10 ${firebaseClasses.menuItem.hover} rounded-md mx-auto my-1`}>
-                      <div className="flex items-center justify-center space-x-1 sm:space-x-2 w-full min-w-0">
-                        {userData?.imagem_perfil ? <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full overflow-hidden border-1 sm:border-2 border-white flex-shrink-0">
+                    <SidebarMenuButton className={`flex items-center justify-center w-full p-2 h-10 ${firebaseClasses.menuItem.hover} rounded-md mx-auto my-1`}>
+                      <div className="flex items-center justify-center space-x-2 w-full">
+                        {userData?.imagem_perfil ? <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-white">
                             <img src={userData.imagem_perfil} alt="Profile" className="w-full h-full object-cover" />
-                          </div> : <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#ff7a59] text-white flex-shrink-0">
-                            <span className="text-xs sm:text-sm font-bold">{getUserInitial()}</span>
+                          </div> : <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#ff7a59] text-white shrink-0">
+                            {getUserInitial()}
                           </div>}
-                        <div className="flex flex-col items-start min-w-0 flex-1">
-                          <span className={`font-medium text-xs sm:text-sm text-gray-300 truncate w-full uppercase ${firebaseClasses.text.small}`}>{getDisplayName()}</span>
-                          {getUserCargo() && <span className={`text-xs sm:text-sm text-gray-400 truncate w-full ${firebaseClasses.text.tiny}`}>
+                        <div className="flex flex-col items-start min-w-0">
+                          <span className={`font-medium text-xs text-gray-300 truncate w-full uppercase ${firebaseClasses.text.small}`}>{getDisplayName()}</span>
+                          {getUserCargo() && <span className={`text-xs text-gray-400 truncate w-full ${firebaseClasses.text.tiny}`}>
                               {getUserCargo()}
                             </span>}
                         </div>
-                        <ChevronUp className="h-2 w-2 sm:h-3 sm:w-3 flex-shrink-0" />
+                        <ChevronUp className="h-3 w-3 shrink-0" />
                       </div>
                     </SidebarMenuButton>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className={`w-48 sm:w-56 md:w-64 bg-card border-border text-card-foreground ${firebaseClasses.text.normal}`}>
+                  <DropdownMenuContent align="end" className={`w-64 bg-card border-border text-card-foreground ${firebaseClasses.text.normal}`}>
                     <div className="p-2 border-b border-border">
-                      <div className="flex items-center space-x-2 sm:space-x-3">
-                        {userData?.imagem_perfil ? <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-white flex-shrink-0">
+                      <div className="flex items-center space-x-3">
+                        {userData?.imagem_perfil ? <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white">
                             <img src={userData.imagem_perfil} alt="Profile" className="w-full h-full object-cover" />
-                          </div> : <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#ff7a59] text-white flex-shrink-0">
-                            <span className="text-sm sm:text-base font-bold">{getUserInitial()}</span>
+                          </div> : <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#ff7a59] text-white">
+                            {getUserInitial()}
                           </div>}
-                        <div className="space-y-1 min-w-0 flex-1">
-                          <p className="font-bold text-xs sm:text-sm truncate">{getDisplayName()}</p>
+                        <div className="space-y-1">
+                          <p className="font-bold text-sm">{getDisplayName()}</p>
                           <p className="text-xs text-muted-foreground flex items-start">
-                            <UserRound className="h-2 w-2 sm:h-3 sm:w-3 mr-1 sm:mr-1.5 mt-0.5 flex-shrink-0" />
-                            <span className="truncate text-xs">{user?.email || ""}</span>
+                            <UserRound className="h-3 w-3 mr-1.5 mt-0.5 flex-shrink-0" />
+                            <span className="truncate">{user?.email || ""}</span>
                           </p>
                           
                           <div className="flex flex-wrap gap-y-1">
-                            {getUserCargo() && <div className="flex items-center mr-2 sm:mr-3">
-                                <Briefcase className="h-2 w-2 sm:h-3 sm:w-3 mr-1 text-muted-foreground flex-shrink-0" />
-                                <span className="text-xs text-muted-foreground truncate">{getUserCargo()}</span>
+                            {getUserCargo() && <div className="flex items-center mr-3">
+                                <Briefcase className="h-3 w-3 mr-1 text-muted-foreground" />
+                                <span className="text-xs text-muted-foreground">{getUserCargo()}</span>
                               </div>}
                             
                             {getUserUnidade() && <div className="flex items-center">
-                                <Building2 className="h-2 w-2 sm:h-3 sm:w-3 mr-1 text-muted-foreground flex-shrink-0" />
-                                <span className="text-xs text-muted-foreground truncate">{getUserUnidade()}</span>
+                                <Building2 className="h-3 w-3 mr-1 text-muted-foreground" />
+                                <span className="text-xs text-muted-foreground">{getUserUnidade()}</span>
                               </div>}
                           </div>
                         </div>
@@ -707,25 +648,25 @@ const AppSidebar = () => {
                     </div>
 
                     <DropdownMenuItem onClick={() => navigate("/perfil")} className="hover:bg-muted focus:bg-muted p-2">
-                      <UserRound className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                      <span className="text-xs sm:text-sm">Perfil</span>
+                      <UserRound className="mr-2 h-4 w-4" />
+                      <span>Perfil</span>
                     </DropdownMenuItem>
 
                     <DropdownMenuItem onClick={toggleTheme} className="hover:bg-muted focus:bg-muted p-2">
-                      {theme === "light" ? <Moon className="mr-2 h-3 w-3 sm:h-4 sm:w-4" /> : <Sun className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />}
-                      <span className="text-xs sm:text-sm">Mudar para tema {theme === "light" ? "escuro" : "claro"}</span>
+                      {theme === "light" ? <Moon className="mr-2 h-4 w-4" /> : <Sun className="mr-2 h-4 w-4" />}
+                      <span>Mudar para tema {theme === "light" ? "escuro" : "claro"}</span>
                     </DropdownMenuItem>
                     
                     <DropdownMenuItem onClick={() => navigate("/perfil")} className="hover:bg-muted focus:bg-muted p-2">
-                      <Settings className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                      <span className="text-xs sm:text-sm">Configurações</span>
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Configurações</span>
                     </DropdownMenuItem>
                     
                     <DropdownMenuSeparator className="bg-border" />
                     
                     <DropdownMenuItem onClick={handleSignOut} className="text-destructive hover:bg-muted focus:bg-muted p-2">
-                      <LogOut className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                      <span className="text-xs sm:text-sm">Sair</span>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Sair</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
